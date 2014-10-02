@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Unic.Bob.Dodger</id>
+	<title>Dodger - Build Server Tools</title>
+    <version>0.0.0.0</version>
+    <authors>Unic AG</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Dodger - Build Server Tools</description>
+  </metadata>
+  <files>
+    <file src="..\scripts\BobCanDo-BuildPackage.ps1" target="tools\scripts" />
+    <file src="..\scripts\modules\dodger\*" target="tools\scripts\modules\build" />
+    <file src="..\tools\sitecore-courier\*" target="tools\tools\sitecore-courier" />
+  </files>
+</package>
