@@ -28,14 +28,19 @@ Function New-ScSerializationPackage
         [string]$Target,
         [Parameter(Mandatory=$true)]
         [string]$OutputFile
-    
+
 	)
     Begin{}
-    
+
     Process
     {
         $scriptInvocation = (Get-Variable MyInvocation -Scope 1).Value
         $scriptPath = Split-Path $scriptInvocation.MyCommand.Definition -Parent
+
+        $outputPath = Split-Path $OutputFile -Parent
+        if(-not (Test-Path $outputPath)) {
+            mkdir $outputPath
+        }
 
         $Source = (Resolve-Path $Source -ErrorAction Stop).Path
         $Target = (Resolve-Path $Target -ErrorAction Stop).Path
@@ -44,6 +49,6 @@ Function New-ScSerializationPackage
             $OutputFile = Join-Path $PWD $OutputFile
         }
 
-        & "$scriptPath\..\..\..\tools\sitecore-courier\Sitecore.Courier.Runner.exe" /source:$Source /target:$Target /output:$OutputFile
+        & (ResolvePath "sitecore-courier" "Sitecore.Courier.Runner.exe") /source:$Source /target:$Target /output:$OutputFile
     }
 }
