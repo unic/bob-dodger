@@ -18,7 +18,8 @@ function Set-TeamcityVariables
             }
             $package = $xml.packages.package | ? {$_.id -eq "Sitecore.$type.Config"}
             if($package) {
-                Write-Host "##teamcity[setParameter name='unic.sc.version' value='$($package.version)']"
+                Write-Host "##teamcity[setParameter name='unic.sitecore.version' value='$($package.version)']"
+                Write-Host "##teamcity[setParameter name='unic.sitecore.type' value='$type']"
                 $installed = $true
             }
             $i++

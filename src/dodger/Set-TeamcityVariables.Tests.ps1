@@ -11,7 +11,8 @@ Describe "Set-TeamcityVariables" {
 </packages>
 "@ | Out-File "TestDrive:\packages.config" -Encoding UTF8
 
-    Mock Write-Host {} -Verifiable  -ParameterFilter {$Object -eq "##teamcity[setParameter name='unic.sc.version' value='7.2.12345.18']"}
+    Mock Write-Host {} -Verifiable  -ParameterFilter {$Object -eq "##teamcity[setParameter name='unic.sitecore.version' value='7.2.12345.18']"}
+    Mock Write-Host {} -Verifiable  -ParameterFilter {$Object -eq "##teamcity[setParameter name='unic.sitecore.type' value='Mvc']"}
 
     Set-TeamcityVariables -PackagesConfig "TestDrive:\packages.config"
 
@@ -30,7 +31,8 @@ Describe "Set-TeamcityVariables" {
   </packages>
 "@ | Out-File "TestDrive:\packages.config" -Encoding UTF8
 
-  Mock Write-Host {} -Verifiable  -ParameterFilter {$Object -eq "##teamcity[setParameter name='unic.sc.version' value='7.2.12345.18']"}
+  Mock Write-Host {} -Verifiable  -ParameterFilter {$Object -eq "##teamcity[setParameter name='unic.sitecore.version' value='7.2.12345.18']"}
+  Mock Write-Host {} -Verifiable  -ParameterFilter {$Object -eq "##teamcity[setParameter name='unic.sitecore.type' value='Mvc']"}
 
   Set-TeamcityVariables -PackagesConfig "TestDrive:\packages.config"
 
@@ -49,7 +51,9 @@ Describe "Set-TeamcityVariables" {
 </packages>
 "@ | Out-File "TestDrive:\packages.config" -Encoding UTF8
 
-  Mock Write-Host {} -Verifiable  -ParameterFilter {$Object -eq "##teamcity[setParameter name='unic.sc.version' value='7.2.12345.18']"}
+  Mock Write-Host {} -Verifiable  -ParameterFilter {$Object -eq "##teamcity[setParameter name='unic.sitecore.version' value='7.2.12345.18']"}
+  Mock Write-Host {} -Verifiable  -ParameterFilter {$Object -eq "##teamcity[setParameter name='unic.sitecore.type' value='WebForms']"}
+
 
   Set-TeamcityVariables -PackagesConfig "TestDrive:\packages.config"
 
