@@ -7,7 +7,7 @@ function Set-BuildPinned
       [Parameter(Mandatory=$true)]
       [string] $User,
       [Parameter(Mandatory=$true)]
-      [string] $Password,
+      [string] $Password
   )
   Process
   {
