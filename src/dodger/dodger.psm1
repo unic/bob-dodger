@@ -1,3 +1,5 @@
+$ErrorActionPreference = "Stop"
+
 function ResolvePath() {
   param($PackageId, $RelativePath)
   $paths = @("$PSScriptRoot\..\..\tools", "$PSScriptRoot\..\tools")
