@@ -1,29 +1,16 @@
 
 
-# New-ScItemsNugetPackage
+# New-ScWebsiteNugetPackage
 
 
 ## Syntax
 
-    New-ScItemsNugetPackage [-ItemsFile] <string> [-PackageName] <string> [-Version] <string> [-OutputFolder] <string> [[-NugetCommand] <string>] [<CommonParameters>]
+    New-ScWebsiteNugetPackage [-WebsiteFolder] <string> [-PackageName] <string> [-Version] <string> [-OutputFolder] <string> [[-NugetCommand] <string>] [<CommonParameters>]
 
 
 
 ## Parameters
 
-    
-    -ItemsFile <string>
-
-Required?  true
-
-Position? 0
-
-Default value? 
-
-Accept pipeline input? false
-
-Accept wildchard characters? 
-    
     
     -NugetCommand <string>
 
@@ -69,6 +56,19 @@ Accept wildchard characters?
 Required?  true
 
 Position? 2
+
+Default value? 
+
+Accept pipeline input? false
+
+Accept wildchard characters? 
+    
+    
+    -WebsiteFolder <string>
+
+Required?  true
+
+Position? 0
 
 Default value? 
 

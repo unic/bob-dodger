@@ -1,3 +1,11 @@
+<#
+.SYNOPSIS
+Builds a NuGet package from a items package.
+.DESCRIPTION
+
+.EXAMPLE
+New-ScItemsNugetPackage -ItemsFile "./output/items.update" -PackageName "Post.Items" -Version "%GitVersion.NuGetVersionV2%" -OutputFolder "./output" -NugetCommand "%teamcity.tool.NuGet.CommandLine.DEFAULT.nupkg%\tools\nuget.exe"
+#>
 function New-ScItemsNugetPackage
 {
   [CmdletBinding()]
