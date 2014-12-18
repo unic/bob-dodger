@@ -1,4 +1,4 @@
-* [Dodger - API](api/README.md)
+* [dodger - API](api/README.md)
     * [New-ScItemsNugetPackage](api/New-ScItemsNugetPackage.md)
     * [New-ScSerializationPackage](api/New-ScSerializationPackage.md)
     * [New-ScWebsiteNugetPackage](api/New-ScWebsiteNugetPackage.md)

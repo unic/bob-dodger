@@ -1,4 +1,4 @@
-# Dodger - API
+# dodger - API
 
 ##  New-ScItemsNugetPackage
 Builds a NuGet package from a items package.    
