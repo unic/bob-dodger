@@ -38,6 +38,8 @@ function Set-TeamcityVariables
         $paddedBuildNumber = "{0:D4}" -f [int]$BuildNumber
         $paddedNugetVersion = $nugetVersion.Substring(0, $nugetVersion.Length -4) + $paddedBuildNumber
         Write-Host "##teamcity[setParameter name='GitVersion.NuGetVersionV2' value='$paddedNugetVersion']"
-        
+
+        Write-Host "##teamcity[buildNumber '$paddedNugetVersion']"
+
     }
 }
