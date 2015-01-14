@@ -1,3 +1,29 @@
+<#
+.SYNOPSIS
+Generates a NuGet package for a Sitecore Website.
+
+.DESCRIPTION
+Generates a NuGet package for Octopus Deploy containing the whole output of a Website.
+
+.PARAMETER WebsiteFolder
+The path to the build output of a website.
+
+.PARAMETER PackageName
+The name of the package to create.
+
+.PARAMETER Version
+The version of the package to generate.
+
+.PARAMETER OutputFolder
+The folder where the generated NuGet package will be written.
+
+.PARAMETER NugetCommand
+A path to nuget.exe or just "nuget" if NuGet.exe is in the path.
+
+.EXAMPLE
+New-ScWebsiteNugetPackage -WebsiteFolder .\website\output -PackageName My.Website -Version 1.2.3 -OutputFolder D:\temp -NugetCommand .\tools\nuget.exe
+
+#>
 function New-ScWebsiteNugetPackage
 {
   [CmdletBinding()]

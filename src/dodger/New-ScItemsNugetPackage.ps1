@@ -1,7 +1,25 @@
 <#
 .SYNOPSIS
-Builds a NuGet package from a items package.
+Builds a NuGet package from specified Sitecore items package.
+
 .DESCRIPTION
+Builds a NuGet package with a specified id and version
+from a specified Sitecore items package.
+
+.PARAMETER ItemsFile
+The Sitecore items package file.
+
+.PARAMETER PackageName
+The NuGet package id.
+
+.PARAMETER Version
+The version of the NuGet package to create.
+
+.PARAMETER OutputFolder
+The folder where the generated NuGet package will be written.
+
+.PARAMETER NugetCommand
+A path to nuget.exe or just "nuget" if NuGet.exe is in the path.
 
 .EXAMPLE
 New-ScItemsNugetPackage -ItemsFile "./output/items.update" -PackageName "Post.Items" -Version "%GitVersion.NuGetVersionV2%" -OutputFolder "./output" -NugetCommand "%teamcity.tool.NuGet.CommandLine.DEFAULT.nupkg%\tools\nuget.exe"
