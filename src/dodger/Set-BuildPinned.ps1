@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-Pinns a specific TeamCity build.
+Pins a specific TeamCity build.
 
 .DESCRIPTION
 Pinns a specific TeamCity build with the REST API.

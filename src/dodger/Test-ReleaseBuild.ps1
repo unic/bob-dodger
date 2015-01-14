@@ -1,9 +1,9 @@
 <#
 .SYNOPSIS
-Returns true if the provided branch is release or hotfix branch.
+Returns true if the provided branch is a release or hotfix branch.
 
 .DESCRIPTION
-Returns true if the provided branch is release or hotfix branch.
+Returns true if the provided branch is a release or hotfix branch.
 
 .PARAMETER Branch
 The branch name to test.
