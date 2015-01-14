@@ -5,7 +5,7 @@ Sets all TeamCity parameters for a specific website build.
 Sets the following TeamCity parameters for a specific website build:
 * `unic.sitecore.version`
 * `unic.sitecore.type`: Mvc or WebForms
-* `unic.lofty.version`: Te version of lofty to use.
+* `unic.lofty.version`: The version of Lofty to use.
 * `GitVersion.NuGetVersionV2` will be adapted to include the TeamCity counter in it.
 
 .PARAMETER WebsiteProjectDirectory
