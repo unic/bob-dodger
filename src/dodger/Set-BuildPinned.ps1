@@ -1,3 +1,23 @@
+<#
+.SYNOPSIS
+Pins a specific TeamCity build.
+
+.DESCRIPTION
+Pinns a specific TeamCity build with the REST API.
+
+.PARAMETER BuildId
+The unique id of a build.
+
+.PARAMETER User
+The username to log in to the TeamCity server.
+
+.PARAMETER Password
+The password of the $User.
+
+.EXAMPLE
+Set-BuildPinned -BuildId 1234 -User myusere -Password Secret$
+
+#>
 function Set-BuildPinned
 {
   [CmdletBinding()]

@@ -1,3 +1,26 @@
+<#
+.SYNOPSIS
+Sets all TeamCity parameters for a specific website build.
+.DESCRIPTION
+Sets the following TeamCity parameters for a specific website build:
+* `unic.sitecore.version`
+* `unic.sitecore.type`: Mvc or WebForms
+* `unic.lofty.version`: The version of Lofty to use.
+* `GitVersion.NuGetVersionV2` will be adapted to include the TeamCity counter in it.
+
+.PARAMETER WebsiteProjectDirectory
+The path to the folder containing the csproj of a website.
+
+.PARAMETER BuildNumber
+The TeamCity build counter.
+
+.PARAMETER NugetVersion
+The current NuGet version, normally calculated by GitVersion
+
+.EXAMPLE
+Set-TeamcityVariables -WebsiteProjectDirectory .\src\My.Website -BuildNumber 123 -NugetVersion 1.2.3-beta0001
+
+#>
 function Set-TeamcityVariables
 {
     [CmdletBinding()]
