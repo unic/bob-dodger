@@ -49,6 +49,6 @@ Function New-ScSerializationPackage
             $OutputFile = Join-Path $PWD $OutputFile
         }
 
-        & (ResolvePath "sitecore-courier" "Sitecore.Courier.Runner.exe") /source:$Source /target:$Target /output:$OutputFile
+        & (ResolvePath "sitecore-courier" "Sitecore.Courier.Runner.exe") -s $Source -t $Target -o $OutputFile
     }
 }
