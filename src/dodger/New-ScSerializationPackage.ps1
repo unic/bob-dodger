@@ -50,5 +50,8 @@ Function New-ScSerializationPackage
         }
 
         & (ResolvePath "sitecore-courier" "Sitecore.Courier.Runner.exe") -s $Source -t $Target -o $OutputFile
+        if($LASTEXITCODE -ne 0) {
+            Write-Error "Generating Sitecore update package failed. The exit code of Sitecore courier was not 0."
+        }
     }
 }
