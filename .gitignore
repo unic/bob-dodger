@@ -1,2 +1,4 @@
 packages
 *.nupkg
+paket.exe
+node_modules
