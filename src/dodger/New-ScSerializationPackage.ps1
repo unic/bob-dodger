@@ -43,6 +43,11 @@ Function New-ScSerializationPackage
             mkdir $outputPath
         }
 
+        # We create the source path, to get it working on a new project or a project which migrated to serialization
+        if(-not (Test-Path $Source)) {
+            mkdir $Source
+        }
+
         $Source = (Resolve-Path $Source -ErrorAction Stop).Path
         $Target = (Resolve-Path $Target -ErrorAction Stop).Path
 
