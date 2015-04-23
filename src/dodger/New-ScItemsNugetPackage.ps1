@@ -1,13 +1,13 @@
 <#
 .SYNOPSIS
-Builds a NuGet package from specified Sitecore items package.
+Builds a NuGet package from specified Sitecore items packages.
 
 .DESCRIPTION
 Builds a NuGet package with a specified id and version
-from a specified Sitecore items package.
+from specified Sitecore items packages.
 
-.PARAMETER ItemsFile
-The Sitecore items package file.
+.PARAMETER ItemsFolder
+The folder where all Sitecore item update packages must be placed.
 
 .PARAMETER PackageName
 The NuGet package id.
@@ -29,7 +29,7 @@ function New-ScItemsNugetPackage
   [CmdletBinding()]
   Param(
       [Parameter(Mandatory=$true)]
-      [string] $ItemsFile,
+      [string] $ItemsFolder,
       [Parameter(Mandatory=$true)]
       [string] $PackageName,
       [Parameter(Mandatory=$true)]
@@ -44,7 +44,7 @@ function New-ScItemsNugetPackage
     $OutputFolder = Resolve-Path $OutputFolder
     $tempNuspec = "$($env:TEMP)\$([Guid]::NewGuid()).nuspec"
     cp "$PSScriptRoot\Items.Template.nuspec.template" $tempNuspec
-    & $nugetCommand "pack" $tempNuspec -p "ID=$PackageName" -p "SourceFile=$ItemsFile" -version $Version -OutputDirectory $OutputFolder
+    & $nugetCommand "pack" $tempNuspec -p "ID=$PackageName" -p "BasePath=$ItemsFolder" -version $Version -OutputDirectory $OutputFolder
     rm $tempNuspec
     if($LASTEXITCODE -ne 0) {
         Write-Error "There was an error during creating items package $PackageName from file $ItemsFile."
