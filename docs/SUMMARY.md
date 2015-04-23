@@ -1,2 +1,2 @@
 ##API##
-* [ReleaseNotes](ReleaseNotes.md)
+* [Changelog](Changelog.md)
