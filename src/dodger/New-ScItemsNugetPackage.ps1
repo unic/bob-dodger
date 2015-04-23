@@ -22,7 +22,7 @@ The folder where the generated NuGet package will be written.
 A path to nuget.exe or just "nuget" if NuGet.exe is in the path.
 
 .EXAMPLE
-New-ScItemsNugetPackage -ItemsFile "./output/items.update" -PackageName "Post.Items" -Version "%GitVersion.NuGetVersionV2%" -OutputFolder "./output" -NugetCommand "%teamcity.tool.NuGet.CommandLine.DEFAULT.nupkg%\tools\nuget.exe"
+New-ScItemsNugetPackage -ItemsFolder "./output/" -PackageName "Post.Items" -Version "%GitVersion.NuGetVersionV2%" -OutputFolder "./output" -NugetCommand "%teamcity.tool.NuGet.CommandLine.DEFAULT.nupkg%\tools\nuget.exe"
 #>
 function New-ScItemsNugetPackage
 {
@@ -40,14 +40,14 @@ function New-ScItemsNugetPackage
   )
   Process
   {
-    $ItemsFile = Resolve-Path $ItemsFile
+    $ItemsFolder = Resolve-Path $ItemsFolder
     $OutputFolder = Resolve-Path $OutputFolder
     $tempNuspec = "$($env:TEMP)\$([Guid]::NewGuid()).nuspec"
     cp "$PSScriptRoot\Items.Template.nuspec.template" $tempNuspec
     & $nugetCommand "pack" $tempNuspec -p "ID=$PackageName" -p "BasePath=$ItemsFolder" -version $Version -OutputDirectory $OutputFolder
     rm $tempNuspec
     if($LASTEXITCODE -ne 0) {
-        Write-Error "There was an error during creating items package $PackageName from file $ItemsFile."
+        Write-Error "There was an error during creating items package $PackageName from folder $ItemsFolder."
     }
   }
 }
