@@ -44,7 +44,7 @@ function New-ScItemsNugetPackage
     $OutputFolder = Resolve-Path $OutputFolder
     $tempNuspec = "$($env:TEMP)\$([Guid]::NewGuid()).nuspec"
     cp "$PSScriptRoot\Items.Template.nuspec.template" $tempNuspec
-    & $nugetCommand "pack" $tempNuspec -p "ID=$PackageName" -p "BasePath=$ItemsFolder" -version $Version -OutputDirectory $OutputFolder
+    & $nugetCommand "pack" $tempNuspec -p "ID=$PackageName" -BasePath $ItemsFolder -version $Version -OutputDirectory $OutputFolder
     rm $tempNuspec
     if($LASTEXITCODE -ne 0) {
         Write-Error "There was an error during creating items package $PackageName from folder $ItemsFolder."
