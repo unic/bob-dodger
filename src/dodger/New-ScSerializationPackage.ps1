@@ -27,8 +27,9 @@ Function New-ScSerializationPackage
         [Parameter(Mandatory=$true)]
         [string]$Target,
         [Parameter(Mandatory=$true)]
-        [string]$OutputFile
-
+        [string]$OutputFile,
+        [ValidateSet("Force","Skip", "Undefined" )]
+        [string] $CollisionMode = "Undefined"
 	)
     Begin{}
 
@@ -42,6 +43,11 @@ Function New-ScSerializationPackage
             mkdir $outputPath
         }
 
+        # We create the source path, to get it working on a new project or a project which migrated to serialization
+        if(-not (Test-Path $Source)) {
+            mkdir $Source
+        }
+
         $Source = (Resolve-Path $Source -ErrorAction Stop).Path
         $Target = (Resolve-Path $Target -ErrorAction Stop).Path
 
@@ -49,7 +55,7 @@ Function New-ScSerializationPackage
             $OutputFile = Join-Path $PWD $OutputFile
         }
 
-        & (ResolvePath "sitecore-courier" "Sitecore.Courier.Runner.exe") -s $Source -t $Target -o $OutputFile
+        & (ResolvePath "sitecore-courier" "Sitecore.Courier.Runner.exe") -s $Source -t $Target -o $OutputFile -c $CollisionMode
         if($LASTEXITCODE -ne 0) {
             Write-Error "Generating Sitecore update package failed. The exit code of Sitecore courier was not 0."
         }

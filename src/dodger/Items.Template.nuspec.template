@@ -9,7 +9,4 @@
       <requireLicenseAcceptance>false</requireLicenseAcceptance>
       <description>$ID$</description>
     </metadata>
-    <files>
-      <file src="$SourceFile$" />
-    </files>
   </package>

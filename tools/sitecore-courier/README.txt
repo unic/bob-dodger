@@ -1,5 +1,8 @@
-Since Sitecore Courier has no proper release management,
+Since Sitecore Courier has no proper release management and we need some extra features,
 we use a custom build here.
 
-The current binaries are a release build of the commit 3739c6b57
-(https://github.com/unic/Sitecore-Courier/tree/3739c6b57dea6026703aa3a476219c556d77a694)
+Custom features:
+- New command line option '-collisionBehavior' with possible values force, skip and undefined
+
+The current binaries are a release build of the commit 65bd1264d1
+(https://github.com/unic/Sitecore-Courier/commit/65bd1264d1e9887915a0ce5e2bfe906c20ccbe844)
