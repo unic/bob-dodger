@@ -1,12 +1,25 @@
 <#
 .SYNOPSIS
+Installs the Sitecore update package to a specific location if Sitecore
+was updated.
 
 .DESCRIPTION
+Compares two versions of a Sitecore website and if the Sitecore version was
+changed between this two versions, it installs the Sitecore update items package
+for the target version to a specific location.
 
 
-.PARAMETER
+.PARAMETER SourceWebsitePath
+The path to the source version of the Sitecore website.
+
+.PARAMETER TargetWebSitePath
+The path to the target version of the Sitecore website.
+
+.PARAMETER OutputLocation
+The location where the items package should be installed to.
 
 .EXAMPLE
+Install-SitecoreUpdateItemsPackage ./reference/src/Customer.Website ./Customer.Website ./output
 
 #>
 function Install-SitecoreUpdateItemsPackage
