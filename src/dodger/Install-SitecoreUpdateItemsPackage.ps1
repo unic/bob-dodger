@@ -5,7 +5,7 @@ was updated.
 
 .DESCRIPTION
 Compares two versions of a Sitecore website and if the Sitecore version was
-changed between this two versions, it installs the Sitecore update items package
+changed between these two versions, it installs the Sitecore update items package
 for the target version to a specific location.
 
 
