@@ -17,3 +17,4 @@ Get-ChildItem -Path $PSScriptRoot\*.ps1 -Exclude "*.Tests.ps1" | Foreach-Object{
 Export-ModuleMember -Function * -Alias *
 
 Import-Module (ResolvePath "Unic.Bob.Config" "tools\BobConfig")
+Import-Module (ResolvePath "Unic.Bob.Skip" "Skip")
