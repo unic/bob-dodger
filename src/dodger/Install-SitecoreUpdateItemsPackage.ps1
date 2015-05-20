@@ -35,6 +35,23 @@ function Install-SitecoreUpdateItemsPackage
     )
     Process
     {
+        function ParseVersion {
+            param($Version)
+
+            $versionParts = $Version.Split(".")
+            if($versionParts.Count -lt 3) {
+                Write-Warning "Could not parse version $Version"
+            }
+            else {
+                @{
+                    "Major" = $versionParts[0];
+                    "Minor" = $versionParts[1];
+                    "Patch" = $versionParts[2];
+                    "Original" = $Version;
+                }
+            }
+        }
+
         $sourcePackagesConfigFile = "$SourceWebsitePath\packages.config"
         if(-not (Test-Path $sourcePackagesConfigFile)) {
             Write-Warning "$sourcePackagesConfigFile could not be found"
@@ -50,15 +67,19 @@ function Install-SitecoreUpdateItemsPackage
         [xml]$sourcePackagesConfig = Get-Content $sourcePackagesConfigFile
         [xml]$targetPackagesConfig = Get-Content $targetPackagesConfigFile
 
-        $sourceVersion = ($sourcePackagesConfig.packages.package | ? {$_.id -eq "Sitecore"}).version
-        $targetVersion = ($targetPackagesConfig.packages.package | ? {$_.id -eq "Sitecore"}).version
+        $sourceVersion = Parseversion (($sourcePackagesConfig.packages.package | ? {$_.id -eq "Sitecore"}).version)
+        $targetVersion = ParseVersion (($targetPackagesConfig.packages.package | ? {$_.id -eq "Sitecore"}).version)
         if(-not $sourceVersion -or -not $targetVersion) {
             Write-Warning "Source or target version could not be found."
             return
         }
 
-        if($sourceVersion -ne $targetVersion) {
-            Install-NugetPackage -PackageId "Sitecore.Update" -Version $targetVersion -OutputLocation $outputLocation -ProjectPath $TargetWebSitePath
+        if($sourceVersion.Major -eq $targetVersion.Major -and
+            $sourceVersion.Minor -eq $targetVersion.Minor -and
+            $sourceVersion.Patch -ne $targetVersion.Patch) {
+                
+
+            Install-NugetPackage -PackageId "Sitecore.Update" -Version $targetVersion.Original -OutputLocation $outputLocation -ProjectPath $TargetWebSitePath
         }
     }
 }
