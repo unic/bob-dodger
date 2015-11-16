@@ -91,4 +91,15 @@ Describe "Set-TeamcityVariables" {
             Assert-VerifiableMocks
         }
     }
+
+    Context "Should set buildNumber version for major builds" {
+
+        Mock Write-Host {} -Verifiable  -ParameterFilter {$Object -eq "##teamcity[buildNumber '1.1']"} -ModuleName Dodger
+
+        Set-TeamcityVariables -WebsiteProjectDirectory "TestDrive:\" -BuildNumber 12 -NugetVersion "1.1"
+
+        It "Should have set buildNumber version" {
+            Assert-VerifiableMocks
+        }
+    }
 }
