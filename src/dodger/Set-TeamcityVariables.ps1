@@ -58,8 +58,11 @@ function Set-TeamcityVariables
         $config = Get-ScProjectConfig $WebsiteProjectDirectory
         Write-Host "##teamcity[setParameter name='unic.lofty.version' value='$($config.LoftyVersion)']"
 
-        $paddedBuildNumber = "{0:D4}" -f [int]$BuildNumber
-        $paddedNugetVersion = $nugetVersion.Substring(0, $nugetVersion.Length -4) + $paddedBuildNumber
+        $paddedNugetVersion = $nugetVersion
+        if($paddedNugetVersion.Contains("-") -and ($paddedNugetVersion.Length - ($paddedNugetVersion.IndexOf("-") + 1)) -ge 4) {
+            $paddedBuildNumber = "{0:D4}" -f [int]$BuildNumber
+            $paddedNugetVersion = $paddedNugetVersion.Substring(0, $paddedNugetVersion.Length - 4) + $paddedBuildNumber
+        }
         Write-Host "##teamcity[setParameter name='GitVersion.NuGetVersionV2' value='$paddedNugetVersion']"
 
         Write-Host "##teamcity[buildNumber '$paddedNugetVersion']"
