@@ -3,6 +3,7 @@ we use a custom build here.
 
 Custom features:
 - New command line option '-collisionBehavior' with possible values force, skip and undefined
+- All file system folders are excluced
 
-The current binaries are a release build of the commit 65bd1264d1
-(https://github.com/unic/Sitecore-Courier/commit/65bd1264d1e9887915a0ce5e2bfe906c20ccbe844)
+The current binaries are a release build of the commit 82aea7b60d
+(https://github.com/unic/Sitecore-Courier/tree/unicMaster)
