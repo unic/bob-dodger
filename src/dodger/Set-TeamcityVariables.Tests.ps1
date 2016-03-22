@@ -20,7 +20,7 @@ Describe "Set-TeamcityVariables" {
         Assert-VerifiableMocks
     }
   }
-  Context "When packages.config contains MVC and other packages" {
+  Context "When packages.config containsR MVC and other packages" {
   @"
 <?xml version="1.0" encoding="utf-8"?>
   <packages>
@@ -63,13 +63,12 @@ Describe "Set-TeamcityVariables" {
     }
 
     Context "Should set lofty version" {
-        mkdir "TestDrive:\App_config"
         @"
 <?xml version="1.0" encoding="utf-8"?>
 <configuration>
     <LoftyVersion>1.2</LoftyVersion>
 </configuration>
-"@ | Out-File "TestDrive:\App_config\Bob.config" -Encoding UTF8
+"@ | Out-File "TestDrive:\Bob.config" -Encoding UTF8
 
 
         Mock Write-Host {} -Verifiable  -ParameterFilter {$Object -eq "##teamcity[setParameter name='unic.lofty.version' value='1.2']"} -ModuleName Dodger
