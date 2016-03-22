@@ -18,7 +18,7 @@ Function New-ScSerializationNugetPackage
         [string]$OutputFolder,
         [Parameter(Mandatory=$true)]
         [string]$NugetCommand,
-        #[string]$SerializationPattern = "**/serialization/"
+        [string]$SerializationPattern = "**/serialization/"
         
 	)
     Begin{}
@@ -28,12 +28,11 @@ Function New-ScSerializationNugetPackage
         $tempFolder = "$($env:TEMP)\$([Guid]::NewGuid())"
         mkdir $tempFolder | Out-Null
         
-        # TODO ls over whole project
         $config = Get-ScProjectConfig $Source
         $basePath = Join-Path $Source $config.SerializationPath
         
-        
-        Add-RubbleArchiveFile -Path "$Source\serialization\app\"  -ArchivePath "$tempFolder\app.zip"
+        # TODO ls over whole project for new Habitat architecure
+        Add-RubbleArchiveFile -Path "$Source\serialization\app\"  -ArchivePath "$tempFolder\app.zip" -RelativeToPath $basePath
         Add-RubbleArchiveFile -Path "$Source\serialization\appDefault" -ArchivePath "$tempFolder\appDefault.zip"
         
         New-ScItemsNugetPackage `
