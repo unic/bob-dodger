@@ -17,8 +17,7 @@ Function New-ScSerializationNugetPackage
         [Parameter(Mandatory=$true)]
         [string]$OutputFolder,
         [Parameter(Mandatory=$true)]
-        [string]$NugetCommand,
-        [string]$SerializationPattern = "**/serialization/"
+        [string]$NugetCommand
         
 	)
     Begin{}
@@ -31,9 +30,17 @@ Function New-ScSerializationNugetPackage
         $config = Get-ScProjectConfig $Source
         $basePath = Join-Path $Source $config.SerializationPath
         
-        # TODO ls over whole project for new Habitat architecure
-        Add-RubbleArchiveFile -Path "$Source\serialization\app\"  -ArchivePath "$tempFolder\app.zip" -RelativeToPath $basePath
-        Add-RubbleArchiveFile -Path "$Source\serialization\appDefault" -ArchivePath "$tempFolder\appDefault.zip"
+        $projects = (ls $ProjectPath -Include *.csproj -Recurse)
+        foreach($project in $projects) {
+            $folder = Split-Path $project
+            $name = [System.IO.Path]::GetFileNameWithoutExtension((Get-Item $project).Name)
+            
+            $configFolder = "$tempFolder\$name" 
+            mkdir $configFolder
+            cp $folder\Web.*.config $configFolder
+        }
+        
+        cp "$($config.WebsitePath)\Bob.config" $tempFolder
         
         New-NugetPackage `
         -BaseFolder $tempFolder `

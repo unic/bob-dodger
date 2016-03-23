@@ -6,7 +6,7 @@ Builds a NuGet package.
 Builds a NuGet package with a specified id and version
 from specified folder.
 
-.PARAMETER ItemsFolder
+.PARAMETER BaseFolder
 The folder containing the content to pack.
 
 .PARAMETER PackageName
@@ -29,7 +29,7 @@ function New-NugetPackage
   [CmdletBinding()]
   Param(
       [Parameter(Mandatory=$true)]
-      [string] $ItemsFolder,
+      [string] $BaseFolder,
       [Parameter(Mandatory=$true)]
       [string] $PackageName,
       [Parameter(Mandatory=$true)]
@@ -40,14 +40,14 @@ function New-NugetPackage
   )
   Process
   {
-    $ItemsFolder = Resolve-Path $ItemsFolder
+    $BaseFolder = Resolve-Path $BaseFolder
     $OutputFolder = Resolve-Path $OutputFolder
     $tempNuspec = "$($env:TEMP)\$([Guid]::NewGuid()).nuspec"
     cp "$PSScriptRoot\nuspec.template" $tempNuspec
-    & $nugetCommand "pack" $tempNuspec -p "ID=$PackageName" -BasePath $ItemsFolder -version $Version -OutputDirectory $OutputFolder
+    & $nugetCommand "pack" $tempNuspec -p "ID=$PackageName" -BasePath $BaseFolder -version $Version -OutputDirectory $OutputFolder
     rm $tempNuspec
     if($LASTEXITCODE -ne 0) {
-        Write-Error "There was an error during creating items package $PackageName from folder $ItemsFolder."
+        Write-Error "There was an error during creating items package $PackageName from folder $BaseFolder."
     }
   }
 }
