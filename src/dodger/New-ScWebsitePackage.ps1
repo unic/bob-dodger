@@ -8,12 +8,7 @@ function New-ScWebsitePackage
         [Parameter(Mandatory=$true)]
         [string]$MSBuildPath,
         [Parameter(Mandatory=$true)]
-        [string]$PackageName,
-        [Parameter(Mandatory=$true)]
-        [string] $Version,
-        [Parameter(Mandatory=$true)]
-        [string] $OutputFolder = ".",
-        [string] $NugetCommand = "nuget",
+        [string] $OutputFolder,
         [string]$TempPath = $env:TEMP
     )
     Process
@@ -24,24 +19,18 @@ function New-ScWebsitePackage
         mkdir $tempPath
         
         $buildPath = "$tempPath\build"
-        $output = "$tempPath\output\"
-        mkdir $output
+        if(-not (Test-Path $OutputFolder)) {
+            mkdir $OutputFolder
+        }
         
         foreach($project in $projects) {
             & $MSBuildPath $project /p:OutputPath=$buildPath
             $name = [System.IO.Path]::GetFileNameWithoutExtension((Get-Item $project).Name)
             $websitePath = "$buildPath\_PublishedWebsites\$name"
             if(Test-Path $websitePath) { 
-                xcopy "$websitePath" $output /y /s
+                xcopy "$websitePath" $OutputFolder /y /s
             }
         }
-        
-        New-ScWebsiteNugetPackage `
-          -WebsiteFolder $output `
-          -PackageName $PackageName `
-          -Version $Version `
-          -OutputFolder $OutputFolder `
-          -NugetCommand $NugetCommand
           
         rm $tempPath -Recurse       
     }
