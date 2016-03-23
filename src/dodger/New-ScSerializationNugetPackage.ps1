@@ -35,7 +35,7 @@ Function New-ScSerializationNugetPackage
         Add-RubbleArchiveFile -Path "$Source\serialization\app\"  -ArchivePath "$tempFolder\app.zip" -RelativeToPath $basePath
         Add-RubbleArchiveFile -Path "$Source\serialization\appDefault" -ArchivePath "$tempFolder\appDefault.zip"
         
-        New-ScItemsNugetPackage `
+        New-NugetPackage `
         -ItemsFolder $tempFolder `
         -PackageName $PackageName `
         -Version $Version `
