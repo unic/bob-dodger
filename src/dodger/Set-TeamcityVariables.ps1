@@ -37,7 +37,7 @@ function Set-TeamcityVariables
         $config = Get-ScProjectConfig $WebsiteProjectDirectory
         
         Write-Host "##teamcity[setParameter name='unic.sitecore.version' value='$($config.SitecoreVersion)']"
-        Write-Host "##teamcity[setParameter name='unic.sitecore.type' value='$(config.SitecoreType)']"
+        Write-Host "##teamcity[setParameter name='unic.sitecore.type' value='$($config.SitecoreType)']"
         
         Write-Host "##teamcity[setParameter name='unic.lofty.version' value='$($config.LoftyVersion)']"
 
