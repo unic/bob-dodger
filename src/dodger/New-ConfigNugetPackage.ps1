@@ -1,7 +1,9 @@
 <#
 
+.SYNOPSIS
+
 #>
-Function New-ScSerializationNugetPackage
+Function New-ConfigNugetPackage
 {
     [CmdletBinding(
     	SupportsShouldProcess=$True,
