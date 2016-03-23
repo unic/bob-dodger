@@ -20,7 +20,7 @@ Describe "Set-TeamcityVariables" {
         Assert-VerifiableMocks
     }
   }
-  Context "When packages.config containsR MVC and other packages" {
+  Context "When packages.config contains MVC and other packages" {
   @"
 <?xml version="1.0" encoding="utf-8"?>
   <packages>
