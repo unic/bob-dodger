@@ -1,9 +1,9 @@
 <#
 .SYNOPSIS
-Build and publishes every Visual Studio project in the repository.
+Builds and publishes every Visual Studio project in the repository.
 
 .DESCRIPTION
-Build and publishes every Visual Studio project in the repository.
+Builds and publishes every Visual Studio project in the repository.
 
 .PARAMETER MSBuildPath
 The path to msbuild.exe
