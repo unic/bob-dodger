@@ -18,7 +18,7 @@ Function New-ScSerializationNugetPackage
         [string]$OutputFolder,
         [Parameter(Mandatory=$true)]
         [string]$NugetCommand,
-        [string]$SerializationPattern = "**/serialization/"
+        [bool]$DistributedSerialization = $true
         
 	)
     Begin{}
@@ -31,8 +31,23 @@ Function New-ScSerializationNugetPackage
         $config = Get-ScProjectConfig $Source
         $basePath = Join-Path $Source $config.SerializationPath
         
-        # TODO ls over whole project for new Habitat architecure
-        Add-RubbleArchiveFile -Path "$Source\serialization\app\"  -ArchivePath "$tempFolder\app.zip" -RelativeToPath $basePath
+        if($DistributedSerialization) {
+            $projects = (ls $Source -Include *.csproj -Recurse)
+            foreach($project in $projects) {
+                $projectPath = Split-Path (Split-Path $project)
+                $projectSerialization = "$projectPath\serialization"
+                if(Test-Path $projectSerialization) {
+                    Write-Host "Add $projectSerialization to $tempFolder\app.zip "
+                    Add-RubbleArchiveFile -Path $projectSerialization  -ArchivePath "$tempFolder\app.zip" -RelativeToPath $basePath            
+                }
+                else {
+                    Write-Host "$projectSerialization doesn't exist. Skip."
+                }
+            }
+        }
+        else {
+            Add-RubbleArchiveFile -Path "$Source\serialization\app\"  -ArchivePath "$tempFolder\app.zip" -RelativeToPath $basePath
+        }
         Add-RubbleArchiveFile -Path "$Source\serialization\appDefault" -ArchivePath "$tempFolder\appDefault.zip"
         
         New-NugetPackage `
