@@ -1,5 +1,40 @@
 <#
+.SYNOPSIS
+Builds the NuGet package containing all serialization files.
 
+.DESCRIPTION
+Builds the NuGet package containing all serialization files.
+
+.PARAMETER Source
+Path to the root of the repository.
+
+.PARAMETER PackageName
+The name of the package to create.
+
+.PARAMETER Version
+The version of the package to generate.
+
+.PARAMETER OutputFolder
+The folder where the generated NuGet package will be written.
+
+.PARAMETER NugetCommand
+A path to nuget.exe or just "nuget" if NuGet.exe is in the path.
+
+.PARAMETER DistributedSerialization
+If DistributedSerialization is true, the command will search for serialization folders in the whole solution.
+The excepted structure is as follow: 
+ 
+ ...
+   |- serialization
+      |- ...
+   |- code 
+      |- *.csproj
+      |- ...
+      
+If DistributedSerialization is false it will simply take $Source/serialization as the only serialization folder.
+
+.EXAMPLE
+New-ConfigNugetPackage -Source D:\projects\myProject -PackageName My.Config -Version 1.2.3 -OutputFolder D:\temp -NugetCommand .\tools\nuget.exe -DistributedSerialization $true
 #>
 Function New-ScSerializationNugetPackage
 {
