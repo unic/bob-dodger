@@ -42,8 +42,6 @@ Function New-ConfigNugetPackage
         [string]$NugetCommand
         
 	)
-    Begin{}
-
     Process
     {
         $tempFolder = "$($env:TEMP)\$([Guid]::NewGuid())"
