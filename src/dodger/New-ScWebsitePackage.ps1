@@ -26,7 +26,8 @@ function New-ScWebsitePackage
         [string]$MSBuildPath,
         [Parameter(Mandatory=$true)]
         [string]$OutputFolder,
-        [string]$TempPath = $env:TEMP
+        [string]$TempPath = $env:TEMP,
+        [string]$SolutionPath
     )
     Process
     {
@@ -40,14 +41,37 @@ function New-ScWebsitePackage
             mkdir $OutputFolder
         }
         
-        foreach($project in $projects) {
-            & $MSBuildPath $project /p:OutputPath=$buildPath
-            $name = [System.IO.Path]::GetFileNameWithoutExtension((Get-Item $project).Name)
-            $websitePath = "$buildPath\_PublishedWebsites\$name"
-            if(Test-Path $websitePath) { 
-                xcopy "$websitePath" $OutputFolder /y /s
-            }
+        
+        
+        $publishUrl = "D:\temp\foo"
+        
+        $profilePath = "$tempPath\Test.pubxml"
+        
+        @"
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit http://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <WebPublishMethod>FileSystem</WebPublishMethod>
+    <LastUsedBuildConfiguration>Release</LastUsedBuildConfiguration>
+    <LastUsedPlatform>Any CPU</LastUsedPlatform>
+    <SiteUrlToLaunchAfterPublish />
+    <LaunchSiteAfterPublish>True</LaunchSiteAfterPublish>
+    <ExcludeApp_Data>False</ExcludeApp_Data>
+    <publishUrl>$OutputFolder</publishUrl>
+    <DeleteExistingFiles>False</DeleteExistingFiles>
+  </PropertyGroup>
+</Project>
+"@ | Out-File $profilePath -Encoding UTF8
+        
+        if(-not $SolutionPath) {
+            $SolutionPath = (Resolve-Path *.sln)
         }
+        
+        & $MSBuildPath $SolutionPath /p:DeployOnBuild=true /p:VisualStudioVersion=14.0 /p:PublishProfile=$profilePath /p:Configuration=Release
           
         rm $tempPath -Recurse       
     }
