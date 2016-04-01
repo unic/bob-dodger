@@ -1,5 +1,40 @@
 <#
+.SYNOPSIS
+Builds the NuGet package containing all serialization files.
 
+.DESCRIPTION
+Builds the NuGet package containing all serialization files.
+
+.PARAMETER Source
+Path to the root of the repository.
+
+.PARAMETER PackageName
+The name of the package to create.
+
+.PARAMETER Version
+The version of the package to generate.
+
+.PARAMETER OutputFolder
+The folder where the generated NuGet package will be written.
+
+.PARAMETER NugetCommand
+A path to nuget.exe or just "nuget" if NuGet.exe is in the path.
+
+.PARAMETER DistributedSerialization
+If DistributedSerialization is true, the command will search for serialization folders in the whole solution.
+The excepted structure is as follow: 
+ 
+ ...
+   |- serialization
+      |- ...
+   |- code 
+      |- *.csproj
+      |- ...
+      
+If DistributedSerialization is false it will simply take $Source/serialization as the only serialization folder.
+
+.EXAMPLE
+New-ConfigNugetPackage -Source D:\projects\myProject -PackageName My.Config -Version 1.2.3 -OutputFolder D:\temp -NugetCommand .\tools\nuget.exe -DistributedSerialization $true
 #>
 Function New-ScSerializationNugetPackage
 {
@@ -18,7 +53,7 @@ Function New-ScSerializationNugetPackage
         [string]$OutputFolder,
         [Parameter(Mandatory=$true)]
         [string]$NugetCommand,
-        [string]$SerializationPattern = "**/serialization/"
+        [bool]$DistributedSerialization = $true
         
 	)
     Begin{}
@@ -31,12 +66,27 @@ Function New-ScSerializationNugetPackage
         $config = Get-ScProjectConfig $Source
         $basePath = Join-Path $Source $config.SerializationPath
         
-        # TODO ls over whole project for new Habitat architecure
-        Add-RubbleArchiveFile -Path "$Source\serialization\app\"  -ArchivePath "$tempFolder\app.zip" -RelativeToPath $basePath
+        if($DistributedSerialization) {
+            $projects = (ls $Source -Include *.csproj -Recurse)
+            foreach($project in $projects) {
+                $projectPath = Split-Path (Split-Path $project)
+                $projectSerialization = "$projectPath\serialization"
+                if(Test-Path $projectSerialization) {
+                    Write-Host "Add $projectSerialization to $tempFolder\app.zip "
+                    Add-RubbleArchiveFile -Path $projectSerialization  -ArchivePath "$tempFolder\app.zip" -RelativeToPath $basePath            
+                }
+                else {
+                    Write-Host "$projectSerialization doesn't exist. Skip."
+                }
+            }
+        }
+        else {
+            Add-RubbleArchiveFile -Path "$Source\serialization\app\"  -ArchivePath "$tempFolder\app.zip" -RelativeToPath $basePath
+        }
         Add-RubbleArchiveFile -Path "$Source\serialization\appDefault" -ArchivePath "$tempFolder\appDefault.zip"
         
-        New-ScItemsNugetPackage `
-        -ItemsFolder $tempFolder `
+        New-NugetPackage `
+        -BaseFolder $tempFolder `
         -PackageName $PackageName `
         -Version $Version `
         -OutputFolder $OutputFolder `
