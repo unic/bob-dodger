@@ -1,13 +1,13 @@
 <#
 .SYNOPSIS
-Builds a NuGet package from specified Sitecore items packages.
+Builds a NuGet package.
 
 .DESCRIPTION
 Builds a NuGet package with a specified id and version
-from specified Sitecore items packages.
+from specified folder.
 
-.PARAMETER ItemsFolder
-The folder where all Sitecore item update packages must be placed.
+.PARAMETER BaseFolder
+The folder containing the content to pack.
 
 .PARAMETER PackageName
 The NuGet package id.
@@ -22,14 +22,14 @@ The folder where the generated NuGet package will be written.
 A path to nuget.exe or just "nuget" if NuGet.exe is in the path.
 
 .EXAMPLE
-New-ScItemsNugetPackage -ItemsFolder "./output/" -PackageName "Post.Items" -Version "%GitVersion.NuGetVersionV2%" -OutputFolder "./output" -NugetCommand "%teamcity.tool.NuGet.CommandLine.DEFAULT.nupkg%\tools\nuget.exe"
+New-NugetPackage -ItemsFolder "./output/" -PackageName "Post.Items" -Version "%GitVersion.NuGetVersionV2%" -OutputFolder "./output" -NugetCommand "%teamcity.tool.NuGet.CommandLine.DEFAULT.nupkg%\tools\nuget.exe"
 #>
-function New-ScItemsNugetPackage
+function New-NugetPackage
 {
   [CmdletBinding()]
   Param(
       [Parameter(Mandatory=$true)]
-      [string] $ItemsFolder,
+      [string] $BaseFolder,
       [Parameter(Mandatory=$true)]
       [string] $PackageName,
       [Parameter(Mandatory=$true)]
@@ -40,14 +40,14 @@ function New-ScItemsNugetPackage
   )
   Process
   {
-    $ItemsFolder = Resolve-Path $ItemsFolder
+    $BaseFolder = Resolve-Path $BaseFolder
     $OutputFolder = Resolve-Path $OutputFolder
     $tempNuspec = "$($env:TEMP)\$([Guid]::NewGuid()).nuspec"
-    cp "$PSScriptRoot\Items.Template.nuspec.template" $tempNuspec
-    & $nugetCommand "pack" $tempNuspec -p "ID=$PackageName" -BasePath $ItemsFolder -version $Version -OutputDirectory $OutputFolder
+    cp "$PSScriptRoot\nuspec.template" $tempNuspec
+    & $nugetCommand "pack" $tempNuspec -p "ID=$PackageName" -BasePath $BaseFolder -version $Version -OutputDirectory $OutputFolder
     rm $tempNuspec
     if($LASTEXITCODE -ne 0) {
-        Write-Error "There was an error during creating items package $PackageName from folder $ItemsFolder."
+        Write-Error "There was an error during creating items package $PackageName from folder $BaseFolder."
     }
   }
 }

@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.1.2
+* Removed Keith and Pester from Nuget package
+
 ## 1.1.1
 * Fixed build number calculation in situations where the build was either a 
   release build or a pre-release build with less than 4 chars after the dash.
