@@ -56,7 +56,9 @@ Function New-ConfigNugetPackage
             $name = [System.IO.Path]::GetFileNameWithoutExtension((Get-Item $project).Name)
             
             $configFolder = "$tempFolder\$name" 
-            mkdir $configFolder
+            if(-not (Test-Path $configFolder)) {
+                mkdir $configFolder  
+            } 
             cp $folder\Web.*.config $configFolder
         }
         
