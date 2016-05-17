@@ -72,6 +72,11 @@ by editing this MSBuild file. In order to learn more about this please visit htt
         }
         
         & $MSBuildPath $SolutionPath /p:DeployOnBuild=true /p:VisualStudioVersion=14.0 /p:PublishProfile=$profilePath /p:Configuration=Release
+        
+        if ($LASTEXITCODE -ne 0)
+        {
+            Write-Error "An error has occured. The solution build process failed."
+        }
           
         rm $tempPath -Recurse       
     }
