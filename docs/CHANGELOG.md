@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1
+* Added support for a TC web deploy failure when the solution build process fails
+
+## 2.0
+* Added support for Bob 2.0
+
 ## 1.1.2
 * Removed Keith and Pester from Nuget package
 
