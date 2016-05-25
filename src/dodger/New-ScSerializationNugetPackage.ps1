@@ -79,6 +79,12 @@ Function New-ScSerializationNugetPackage
                     Write-Host "$projectSerialization doesn't exist. Skip."
                 }
             }
+            
+            $modulesSerializationPath = "$Source\serialization\modules\"
+            if($modulesSerializationPath) {
+                Write-Host "Add $modulesSerializationPath to $tempFolder\app.zip "
+                Add-RubbleArchiveFile -Path $modulesSerializationPath  -ArchivePath "$tempFolder\app.zip" -RelativeToPath $basePath
+            }
         }
         else {
             Add-RubbleArchiveFile -Path "$Source\serialization\app\"  -ArchivePath "$tempFolder\app.zip" -RelativeToPath $basePath
