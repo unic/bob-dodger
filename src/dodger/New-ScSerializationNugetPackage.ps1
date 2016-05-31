@@ -80,14 +80,21 @@ Function New-ScSerializationNugetPackage
                 }
             }
             
-            $modulesSerializationPath = "$Source\serialization\modules\"
-            if($modulesSerializationPath) {
-                Write-Host "Add $modulesSerializationPath to $tempFolder\app.zip "
-                Add-RubbleArchiveFile -Path $modulesSerializationPath  -ArchivePath "$tempFolder\app.zip" -RelativeToPath $basePath
-            }
         }
         else {
             Add-RubbleArchiveFile -Path "$Source\serialization\app\"  -ArchivePath "$tempFolder\app.zip" -RelativeToPath $basePath
+        }
+        
+        $modulesSerializationPath = "$Source\serialization\modules\"    
+        if($modulesSerializationPath) {
+            Write-Host "Add $modulesSerializationPath to $tempFolder\app.zip "
+            Add-RubbleArchiveFile -Path $modulesSerializationPath  -ArchivePath "$tempFolder\app.zip" -RelativeToPath $basePath
+        }
+        
+        $rolesSerializationPath = "$Source\serialization\roles\"    
+        if($rolesSerializationPath) {
+            Write-Host "Add $rolesSerializationPath to $tempFolder\app.zip "
+            Add-RubbleArchiveFile -Path $rolesSerializationPath  -ArchivePath "$tempFolder\app.zip" -RelativeToPath $basePath
         }
         Add-RubbleArchiveFile -Path "$Source\serialization\appDefault" -ArchivePath "$tempFolder\appDefault.zip"
         
