@@ -1,7 +1,10 @@
 # Changelog
 
+## 2.3
+Updated the theme
+
 ## 2.2
-The paths 'serialization\modules' and 'serialization\roles' are now packed to the serialization package too.
+The paths 'serialization\modules' and 'serialization\roles' are now packed to the serialization package too
 
 ## 2.1
 * Added support for a TC web deploy failure when the solution build process fails
