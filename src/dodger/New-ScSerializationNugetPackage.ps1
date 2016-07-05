@@ -81,8 +81,11 @@ Function New-ScSerializationNugetPackage
             }
             
         }
-        else {
-            Add-RubbleArchiveFile -Path "$Source\serialization\app\"  -ArchivePath "$tempFolder\app.zip" -RelativeToPath $basePath
+        
+        $globalAppSerialization = "$Source\serialization\app\"
+        if(Test-Path $globalAppSerialization) {
+            Write-Host "Add $globalAppSerialization to $tempFolder\app.zip "
+            Add-RubbleArchiveFile -Path $globalAppSerialization -ArchivePath "$tempFolder\app.zip" -RelativeToPath $basePath
         }
         
         $modulesSerializationPath = "$Source\serialization\modules\"    
