@@ -1,10 +1,14 @@
 # Changelog
 
+## 2.4
+* The path 'serialization\app' will now also be packed to the items NuGet package,
+  when distributed items packaging is enabled.
+
 ## 2.3
-Updated the theme
+* Updated the theme
 
 ## 2.2
-The paths 'serialization\modules' and 'serialization\roles' are now packed to the serialization package too
+* The paths 'serialization\modules' and 'serialization\roles' are now packed to the serialization package too
 
 ## 2.1
 * Added support for a TC web deploy failure when the solution build process fails
