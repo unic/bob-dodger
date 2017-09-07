@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.4.1
+* Creating a serialization nuget package won't crash anymore, when there is no 'appDefault' folder.
+
 ## 2.4
 * The path 'serialization\app' will now also be packed to the items NuGet package,
   when distributed items packaging is enabled.
