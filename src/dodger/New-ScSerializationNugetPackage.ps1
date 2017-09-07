@@ -103,7 +103,7 @@ Function New-ScSerializationNugetPackage
         $appDefaultSerializationPath = "$Source\serialization\appDefault"
         if(Test-Path $appDefaultSerializationPath) {
             Write-Host "Add $appDefaultSerializationPath to $tempFolder\appDefault.zip "
-            Add-RubbleArchiveFile -Path $appDefaultSerializationPath -ArchivePath "$tempFolder\appDefault.zip" -RelativeToPath $basePath
+            Add-RubbleArchiveFile -Path $appDefaultSerializationPath -ArchivePath "$tempFolder\appDefault.zip"
         }
         
         New-NugetPackage `
