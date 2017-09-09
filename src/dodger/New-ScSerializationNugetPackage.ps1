@@ -91,15 +91,20 @@ Function New-ScSerializationNugetPackage
         $modulesSerializationPath = "$Source\serialization\modules\"    
         if(Test-Path $modulesSerializationPath) {
             Write-Host "Add $modulesSerializationPath to $tempFolder\app.zip "
-            Add-RubbleArchiveFile -Path $modulesSerializationPath  -ArchivePath "$tempFolder\app.zip" -RelativeToPath $basePath
+            Add-RubbleArchiveFile -Path $modulesSerializationPath -ArchivePath "$tempFolder\app.zip" -RelativeToPath $basePath
         }
         
         $rolesSerializationPath = "$Source\serialization\roles\"    
         if(Test-Path $rolesSerializationPath) {
             Write-Host "Add $rolesSerializationPath to $tempFolder\app.zip "
-            Add-RubbleArchiveFile -Path $rolesSerializationPath  -ArchivePath "$tempFolder\app.zip" -RelativeToPath $basePath
+            Add-RubbleArchiveFile -Path $rolesSerializationPath -ArchivePath "$tempFolder\app.zip" -RelativeToPath $basePath
         }
-        Add-RubbleArchiveFile -Path "$Source\serialization\appDefault" -ArchivePath "$tempFolder\appDefault.zip"
+
+        $appDefaultSerializationPath = "$Source\serialization\appDefault"
+        if(Test-Path $appDefaultSerializationPath) {
+            Write-Host "Add $appDefaultSerializationPath to $tempFolder\appDefault.zip "
+            Add-RubbleArchiveFile -Path $appDefaultSerializationPath -ArchivePath "$tempFolder\appDefault.zip"
+        }
         
         New-NugetPackage `
         -BaseFolder $tempFolder `
