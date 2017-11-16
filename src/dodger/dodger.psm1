@@ -16,6 +16,6 @@ function ResolvePath() {
 Get-ChildItem -Path $PSScriptRoot\*.ps1 -Exclude "*.Tests.ps1" | Foreach-Object{ . $_.FullName }
 Export-ModuleMember -Function * -Alias *
 
-Import-Module (ResolvePath "Unic.Bob.Config" "tools\BobConfig")
+Import-Module (ResolvePath "Unic.Bob.Wendy" "tools\Wendy")
 Import-Module (ResolvePath "Unic.Bob.Rubble" "tools\Rubble")
 Import-Module (ResolvePath "Unic.Bob.Skip" "Skip")

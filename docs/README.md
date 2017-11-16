@@ -1,8 +1,8 @@
-<div class="chapterlogo">![Dodger](Dodger.jpg)</div>
+<div class="chapterlogo"><img src="./Dodger.jpg"></div>
+
 # Dodger
 
 Dodger is the toolset used on the build server (e.g. Teamcity) for performing Sitecore specific stuff.
-
 
 ## Integrate Dodger in Project
 

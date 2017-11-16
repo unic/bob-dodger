@@ -2,15 +2,18 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>Unic.Bob.Dodger</id>
-	<title>Dodger - Build Server Tools</title>
-    <version>0.0.0.0</version>
+	  <title>Dodger - Build Server Tools</title>
+    <version>$VERSION$</version>
     <authors>Unic AG</authors>
+    <owners>Unic AG</owners>
+    <iconUrl>https://github.com/unic/unic/raw/master/unic_nuget.png</iconUrl>
+    <projectUrl>https://github.com/unic/bob-dodger</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Dodger - Build Server Tools</description>
+    <description>Dodger is the toolset used on the build server (e.g. TeamCity) for performing Sitecore specific stuff.</description>
   </metadata>
   <files>
     <file src="src\**" />
     <file src="tools\**" target="tools" />
-    <file src="packages\**" target="tools" exclude="**\package\services\metadata\core-properties\**;**\Unic.Bob.Keith\**;**\pester\**" />
+    <file src="packages\**" target="tools" exclude="**\package\services\metadata\core-properties\**;**[Content_Types].xml;**\_rels\**;**\Unic.Bob.Keith\**;**\pester\**" />
   </files>
 </package>
