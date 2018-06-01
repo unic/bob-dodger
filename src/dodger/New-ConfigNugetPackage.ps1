@@ -59,7 +59,7 @@ Function New-ConfigNugetPackage
             if(-not (Test-Path $configFolder)) {
                 mkdir $configFolder  
             } 
-            cp $folder\Web.*.config $configFolder
+            cp $folder\Web.*.config $configFolder -Exclude Web.local.config
         }
         
         cp "$($config.WebsitePath)\Bob.config" $tempFolder
