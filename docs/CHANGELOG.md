@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.1
+* Don't add Web.local.config to Config-NuGet package.
+
 ## 3.0
 
 * Initial release on GH
