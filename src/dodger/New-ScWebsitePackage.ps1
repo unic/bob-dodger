@@ -18,34 +18,28 @@ A temp path which the build process should use.
 New-ScWebsitePackage -MSBuildPath "C:\Program Files (x86)\MSBuild\14.0\Bin\MSBuild.exe" -OutputFolder ./output
 
 #>
-function New-ScWebsitePackage
-{
+function New-ScWebsitePackage {
     [CmdletBinding()]
     Param(
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [string]$MSBuildPath,
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [string]$OutputFolder,
         [string]$TempPath = $env:TEMP,
-        [string]$SolutionPath
+        [string]$SolutionPath,
+        [string]$Configuration = "Release",
+        [bool]$MoveBinaries = $false
     )
-    Process
-    {
-        $projects = (ls $ProjectPath -Include *.csproj -Recurse)
-        
+    Process {   
         $tempPath = "$TempPath\$([guid]::NewGuid().Guid)"
         mkdir $tempPath
         
         $buildPath = "$tempPath\build"
-        if(-not (Test-Path $OutputFolder)) {
+        if (-not (Test-Path $OutputFolder)) {
             mkdir $OutputFolder
-        }
+        }        
         
-        
-        
-        $publishUrl = "D:\temp\foo"
-        
-        $profilePath = "$tempPath\Test.pubxml"
+        $profilePath = "$tempPath\Profile.pubxml"
         
         @"
 <?xml version="1.0" encoding="utf-8"?>
@@ -56,7 +50,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <WebPublishMethod>FileSystem</WebPublishMethod>
-    <LastUsedBuildConfiguration>Release</LastUsedBuildConfiguration>
+    <LastUsedBuildConfiguration>$Configuration</LastUsedBuildConfiguration>
     <LastUsedPlatform>Any CPU</LastUsedPlatform>
     <SiteUrlToLaunchAfterPublish />
     <LaunchSiteAfterPublish>True</LaunchSiteAfterPublish>
@@ -67,15 +61,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 </Project>
 "@ | Out-File $profilePath -Encoding UTF8
         
-        if(-not $SolutionPath) {
+        if (-not $SolutionPath) {
             $SolutionPath = (Resolve-Path *.sln)
         }
         
-        & $MSBuildPath $SolutionPath /p:DeployOnBuild=true /p:VisualStudioVersion=14.0 /p:PublishProfile=$profilePath /p:Configuration=Release
+        & $MSBuildPath $SolutionPath /p:DeployOnBuild=true /p:VisualStudioVersion=14.0 /p:PublishProfile=$profilePath /p:Configuration=$Configuration
         
-        if ($LASTEXITCODE -ne 0)
-        {
+        if ($LASTEXITCODE -ne 0) {
             Write-Error "An error has occured. The solution build process failed."
+        }
+
+        if ($MoveBinaries) {
+            Get-ChildItem -Path $OutputFolder\bin -Recurse | Move-Item -Destination $OutputFolder
+            rm $OutputFolder\bin
         }
           
         rm $tempPath -Recurse       
