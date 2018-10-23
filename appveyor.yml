@@ -6,7 +6,7 @@ environment:
   NuGet_PackageId: Unic.Bob.Dodger
   Nuspec_File: .\%NuGet_PackageId%.nuspec
   NuGetToken:
-    secure: FkW4xPS+rRk9TyQngG1RI637L8pvlvj0hi5gc8v3WoeF/mQrYLncPP8t4XjsXYv0
+    secure: FUrZLPDf+3BJZdvrZInK67/EkZ9yJthzS1H/Uk+ei1tQ87IbDw/n7a+K2NvFokzk
   Artefact_Output_Dir: .\output
   GithubEmail: team-unic@unic.com
   GithubUsername: team-unic
